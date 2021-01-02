@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card">
+    <h5 class="card-header info-color white-text text-center py-4">
+        <strong>Sign in</strong>
+    </h5>
+    <div class="card-body px-lg-5 pt-0">
+        <form class="text-center" style="color: #757575;" method="post">
+            {% csrf_token %}
+            <div class="md-form">
+                <label for="materialLoginFormUsername">Username</label>
+                <input type="text" class="form-control" id="materialLoginFormUsername" name="username"
+                       placeholder="Username">
+            </div>
+            <div class="md-form">
+                <label for="materialLoginFormPassword">Password</label>
+                <input type="password" id="materialLoginFormPassword" class="form-control" name="password"
+                       placeholder="Password">
+            </div>
+            <div class="d-flex justify-content-around">
+                <div>
+                    <a href="{% url 'password_reset' %}">Forgot password?</a>
+                </div>
+            </div>
+            <button class="btn btn-outline-primary btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Log
+                In
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}

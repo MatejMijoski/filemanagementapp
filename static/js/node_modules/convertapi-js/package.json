@@ -1,0 +1,63 @@
+{
+  "_from": "convertapi-js",
+  "_id": "convertapi-js@1.0.6",
+  "_inBundle": false,
+  "_integrity": "sha512-kLRlf1E9mY8J7cmsIi03jwtadN6fNPLYwFOIA1Eam3+AXptYs/lD1EB48aAUhW3tyJ8D8yhFfCokwSQe13J7eQ==",
+  "_location": "/convertapi-js",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "convertapi-js",
+    "name": "convertapi-js",
+    "escapedName": "convertapi-js",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/convertapi-js/-/convertapi-js-1.0.6.tgz",
+  "_shasum": "63a4d5736578885545b9d8cd531e27cdd3321594",
+  "_spec": "convertapi-js",
+  "_where": "C:\\Users\\PC\\Desktop\\webcodefy",
+  "author": {
+    "name": "Baltsoft"
+  },
+  "bugs": {
+    "url": "https://github.com/ConvertAPI/convertapi-js/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {},
+  "deprecated": false,
+  "description": "ConvertApi JavaScript and TypeScript library",
+  "devDependencies": {
+    "typescript": "^3.9.7"
+  },
+  "files": [
+    "lib",
+    "src"
+  ],
+  "homepage": "https://github.com/ConvertAPI/convertapi-js",
+  "keywords": [
+    "convertapi",
+    "file",
+    "conversion"
+  ],
+  "license": "MIT",
+  "main": "./lib/convertapi.js",
+  "name": "convertapi-js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ConvertAPI/convertapi-js.git"
+  },
+  "scripts": {
+    "prepublish": "tsc"
+  },
+  "version": "1.0.6"
+}

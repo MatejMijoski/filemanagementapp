@@ -1,0 +1,96 @@
+.menu-link{
+    color:white;
+}
+.alert{
+padding:0px 20px;
+margin:0px;
+}
+
+.form{
+    width:70%;
+}
+
+.menu-link:hover, menu-link:active{
+    color:orange;
+}
+
+.mr-auto, .mx-auto{
+    margin:auto !important;
+}
+
+.submit-btn{
+    margin: 10px auto 0px;
+}
+
+h2, p{
+    font-family:Montserrat;
+}
+
+.tags a{
+    font-family:Arial;
+    font-size:14px;
+    font-weight:400;
+}
+
+.tag-box{
+    padding: 15px;
+    border: 1px solid #dadada;
+    border-radius: 10px;
+    background-color: #f2f2f2;
+}
+
+.common-tags{
+    border:1px solid silver;
+}
+
+.file-buttons{
+    width:30%;
+    margin:5px auto;
+}
+
+.add-description-input{
+    margin:8px 0px;
+}
+
+.submit-desc{
+    margin:auto;
+}
+
+.card{
+    width:500px;
+    margin:30px auto;
+}
+
+.card-header{
+    margin-bottom:30px;
+}
+
+.card-signup{
+    width:700px;
+    margin:30px auto;
+}
+
+#id_password .help-text{
+    display:none;
+}
+
+@keyframes blinker {
+    from {opacity: 1.0;}
+    to {opacity: 0.0;}
+  }
+
+.blink {
+    text-decoration: blink;
+    animation-name: blinker;
+    animation-duration: 0.6s;
+    animation-iteration-count:infinite;
+    animation-timing-function:ease-in-out;
+    animation-direction: alternate;
+  }
+
+#select2-select-tags-container > li > button > span, .select2-selection__choice__display{
+    color:white;
+}
+#select2-select-tags-container > li > button:hover{
+    background-color:transparent;
+}

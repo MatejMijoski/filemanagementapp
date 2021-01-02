@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="container pt-5" style="text-align:center">
+        <div style="width:auto">
+            <h2 style="text-align:center">Profile</h2>
+        </div>
+        <div class="card">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Username: {{ user }}</li>
+                <li class="list-group-item">First name: {{ user.first_name }}</li>
+                <li class="list-group-item">Last name: {{ user.last_name }}</li>
+                <li class="list-group-item">Email: {{ user.email }}</li>
+            </ul>
+        </div>
+        <a href="{% url 'edit_profile' %}" type="button" class="btn btn-primary btn-sm submit-desc">Edit Profile</a>
+    </div>
+</div>
+
+{% endblock %}

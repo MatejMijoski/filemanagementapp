@@ -1,0 +1,237 @@
+{% block content %}
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Tags</th>
+        <th scope="col">Date</th>
+        <th scope="col">Description</th>
+        <th scope="col">Comments</th>
+        <th scope="col">Buttons</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% if filesSearch %}
+    {% for file in filesSearch %}
+    <tr class="card-{{ file.pk }}">
+        <td><h3 class="my-1 file-name"><a href="{{ file.file.url }} " class="file-name">{{file.name}}</a></h3></td>
+        <td>
+            <div style="display:flex" class="row">
+                {% for tag in file.usertags.all %}
+                <div class="col-lg-12 col-sm-12">
+                    <a href="{% url 'tagged' tag.slug %}" style="background-color:{{ tag.color }}"
+                       class="mr-1 badge badge-info">#{{ tag }}</a>
+                </div>
+                {% endfor %}
+            </div>
+        </td>
+        <td><p class="mb-auto text-muted">{{file.time_uploaded}}</p></td>
+        <td><p class="mb-auto text-muted table-data">{{file.description}}</p></td>
+        <td>
+            <ul style="padding:15px; word-wrap: break-word;" class="table-data">
+                {% for comment in file.comments.all %}
+                <li style="font-size:15px; list-style-type: circle;">{{ comment.text }}</li>
+                {% empty %}
+                <p class="mb-auto" style="font-size:15px;">No Comments</p>
+                {% endfor %}
+            </ul>
+        </td>
+        <td class="table-btn">
+            <div class="col-lg-12 col-sm-12 file-buttons">
+                <button onclick="change_tags({{ file.id }})" class="btn btn-info btn-sm change-tags-btn">Change Tags
+                </button>
+            </div>
+            <div class="col-lg-12 col-sm-12 file-buttons">
+                <button onclick="add_description({{ file.id }})" class="btn btn-primary btn-sm">Add a comment</button>
+            </div>
+            <div class="col-lg-12 col-sm-12 file-buttons">
+                <a href=" {{ file.file.url }}" class="btn btn-primary btn-sm" download>Download</a>
+            </div>
+            <div class="col-lg-12 col-sm-12 file-buttons">
+                <button data-id="{{ file.pk }}" onclick="ajax({{ file.pk }})"
+                        class="btn btn-primary btn-sm  delete-file">Delete
+                </button>
+            </div>
+            <div class="additional-description-{{ file.id }}"
+                 style="display:none; border:1px solid silver; padding:20px ">
+                <form action="{% url 'add_comment_to_file' pk=file.pk %}" method="post" style="text-align:center">
+                    {% csrf_token %}
+                    <input type="text" class="form-control" placeholder="Write your comment here" name="text"
+                           maxlength="200">
+                    <button class="btn btn-primary btn-sm" type="submit" style="margin-top:10px;">Submit</button>
+                </form>
+            </div>
+            <div class="change-tags-{{ file.id }}" style="display:none; border:1px solid silver; padding:20px ">
+                <form method="post" action="{% url 'change_tags' pk=file.pk %}"
+                      class="change-tags-form change-{{ file.id }}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <h6>Change the file's tags</h6>
+                    <select id="change-{{ file.id }}"
+                            class="custom-select js-example-basic-multiple change-tags-select form-control "
+                            name="usertags1" multiple="multiple">
+                        {% for tag in userTags %}
+                        <option value="{{ tag }}" id="{{ tag }}" data-id="{{ tag.color }}" class="options">{{ tag }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                    <input type="hidden" name="usertags" class="change-hidden-usertags">
+                    <div style="text-align:center">
+                        <button type="submit" class="btn btn-info btn-sm" style="margin:15px">Change</button>
+                    </div>
+                </form>
+            </div>
+
+        </td>
+    </tr>
+        {% endfor %}
+    </tbody>
+</table>
+    {% else %}
+    {% if files %}
+        {% for file in files %}
+    <!--NEW DESIGN-->
+    <tr class="card-{{ file.pk }}">
+        <td><h3 class="my-1 file-name"><a href="view{{ file.file.url|slice:"5:" }}" class="file-name">{{file.name}}</a></h3></td>
+        <td>
+            <div style="display:flex" class="row">
+                {% for tag in file.usertags.all %}
+                <div class="col-lg-12 col-sm-12">
+                    <a href="{% url 'tagged' tag.slug %}" style="background-color:{{ tag.color }}"
+                       class="mr-1 badge badge-info">#{{ tag }}</a>
+                </div>
+                {% endfor %}
+            </div>
+        </td>
+        <td><p class="mb-auto text-muted">{{file.time_uploaded}}</p></td>
+        <td><p class="mb-auto text-muted table-data">{{file.description}}</p></td>
+        <td>
+            <ul style="padding:15px; word-wrap: break-word;" class="table-data">
+                {% for comment in file.comments.all %}
+                <li style="font-size:15px; list-style-type: circle;">{{ comment.text }}</li>
+                {% empty %}
+                <p class="mb-auto" style="font-size:15px;">No Comments</p>
+                {% endfor %}
+            </ul>
+        </td>
+        <td class="table-btn">
+            <div class="col-lg-12 col-sm-12 file-buttons">
+                <button onclick="change_tags({{ file.id }})" class="btn btn-info btn-sm change-tags-btn">Change Tags
+                </button>
+            </div>
+            <div class="col-lg-12 col-sm-12 file-buttons">
+                <button onclick="add_description({{ file.id }})" class="btn btn-primary btn-sm">Add a comment</button>
+            </div>
+            <div class="col-lg-12 col-sm-12 file-buttons">
+                <a href="{{ file.file.url }}" class="btn btn-primary btn-sm" download>Download</a>
+            </div>
+            <div class="col-lg-12 col-sm-12 file-buttons">
+                <button data-id="{{ file.pk }}" onclick="ajax({{ file.pk }})"
+                        class="btn btn-primary btn-sm  delete-file">Delete
+                </button>
+            </div>
+            <div class="additional-description-{{ file.id }}"
+                 style="display:none; border:1px solid silver; padding:20px ">
+                <form action="{% url 'add_comment_to_file' pk=file.pk %}" method="post" style="text-align:center">
+                    {% csrf_token %}
+                    <input type="text" class="form-control" placeholder="Write your comment here" name="text"
+                           maxlength="200">
+                    <button class="btn btn-primary btn-sm" type="submit" style="margin-top:10px;">Submit</button>
+                </form>
+            </div>
+            <div class="change-tags-{{ file.id }}" style="display:none; border:1px solid silver; padding:20px ">
+                <form method="post" action="{% url 'change_tags' pk=file.pk %}"
+                      class="change-tags-form change-{{ file.id }}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <h6>Change the file's tags</h6>
+                    <select id="change-{{ file.id }}"
+                            class="custom-select js-example-basic-multiple change-tags-select form-control "
+                            name="usertags1" multiple="multiple">
+                        {% for tag in userTags %}
+                        <option value="{{ tag }}" id="{{ tag }}" data-id="{{ tag.color }}" class="options">{{ tag }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                    <input type="hidden" name="usertags" class="change-hidden-usertags">
+                    <div style="text-align:center">
+                        <button type="submit" class="btn btn-info btn-sm" style="margin:15px">Change</button>
+                    </div>
+                </form>
+            </div>
+
+        </td>
+    </tr>
+    <!--END NEW DESIGN-->
+
+
+    <!--                    <div class="col-md-6 card-{{ file.pk }}">-->
+    <!--                        <div class="cards">-->
+    <!--                            <div class="row no-gutters border rounded  flex-md-row mb-4 shadow-sm h-md-250">-->
+    <!--                                <div class="col p-4 d-flex flex-column position-static">-->
+    <!--                                   <h3 class="my-1"><a href="{{ file.file.url }} " class="file-name">{{file.name}}</a></h3>-->
+    <!--                                    <div style="display:flex">-->
+    <!--                                        {% for tag in file.usertags.all %}-->
+    <!--                                        <a href="{% url 'tagged' tag.slug %}" style="background-color:{{ tag.color }}" class="mr-1 badge badge-info">#{{ tag }}</a>-->
+    <!--                                        {% endfor %}-->
+    <!--                                    </div>-->
+    <!--                                    <div style="margin:0px auto 15px;">-->
+    <!--                                    <button onclick="change_tags({{ file.id }})" class="btn btn-info btn-sm change-tags-btn">Change Tags</button>-->
+    <!--                                    </div>-->
+    <!--                                    <div class="change-tags-{{ file.id }}" style="display:none">-->
+    <!--                                        <form method="post"  action="{% url 'change_tags' pk=file.pk %}" class="change-tags-form change-{{ file.id }}" enctype="multipart/form-data">-->
+    <!--                                           {% csrf_token %}-->
+    <!--                                            <select id="change-{{ file.id }}" class="custom-select js-example-basic-multiple change-tags-select form-control " name="usertags1" multiple="multiple">-->
+    <!--                                                {% for tag in userTags %}-->
+    <!--                                                <option value="{{ tag }}" id="{{ tag }}" data-id="{{ tag.color }}" class="options">{{ tag }}</option>-->
+    <!--                                                {% endfor %}-->
+    <!--                                            </select>-->
+    <!--                                            <input type="hidden" name="usertags" class="change-hidden-usertags">-->
+    <!--                                             <div style="text-align:center">-->
+    <!--                                                <button type="submit" class="btn btn-info btn-sm" style="margin:15px">Change</button>-->
+    <!--                                             </div>-->
+    <!--                                        </form>-->
+    <!--                                    </div>-->
+    <!--                                    <p class="mb-auto text-muted">{{file.time_uploaded}}</p>-->
+    <!--                                    <div style="word-wrap: break-word; margin-bottom:30px;">-->
+    <!--                                        <p class="mb-auto text-muted">{{file.description}}</p>-->
+    <!--                                    </div>-->
+    <!--                                    <ul style="padding:15px; word-wrap: break-word;">-->
+    <!--                                    {% for comment in file.comments.all %}-->
+    <!--                                             <li style="font-size:15px; list-style-type: circle;">{{ comment.text }}</li>-->
+    <!--                                        {% empty %}-->
+    <!--                                            <div style="border:1px solid silver; border-radius:15px; padding:15px; margin:10px 0px;word-wrap: break-word;">-->
+    <!--                                             <p class="mb-auto" style="font-size:15px;">No Comments</p>-->
+    <!--                                            </div>-->
+    <!--                                        {% endfor %}-->
+    <!--                                       </ul>-->
+    <!--                                    <div class="additional-description-{{ file.id }}" style="display:none; border:1px solid silver; padding:20px ">-->
+    <!--                                        <form action="{% url 'add_comment_to_file' pk=file.pk %}" method="post" style="text-align:center">-->
+    <!--                                        {% csrf_token %}-->
+    <!--                                        <input type="text"  class="form-control" placeholder="Write your comment here" name="text" maxlength="200">-->
+    <!--                                        <button class="btn btn-primary btn-sm"  type="submit" style="margin-top:10px;">Submit</button>-->
+    <!--                                        </form>-->
+    <!--                                    </div>-->
+    <!--                                    <div style="text-align:center">-->
+    <!--                                        <button onclick="add_description({{ file.id }})" class="btn btn-primary btn-sm file-buttons">Add a comment</button>-->
+    <!--                                         <a href=" {{ file.file.url }}" class="btn btn-primary btn-sm file-buttons" download>Download</a>-->
+    <!--                                        <button data-id="{{ file.pk }}" onclick="ajax({{ file.pk }})" class="btn btn-primary btn-sm file-buttons delete-file">Delete</button>-->
+    <!--                                    </div>-->
+    <!--                                </div>-->
+    <!--                            </div>-->
+    <!--                        </div>-->
+    <!--                    </div>-->
+    {% endfor %}
+    </tbody>
+</table>
+    {% else %}
+    <div><p>No files have been uploaded</p></div>
+    {% endif %}
+    {% endif %}
+    <style>
+    form > span{
+    width:100% !important;
+    }
+
+
+    </style>
+{% endblock %}
+

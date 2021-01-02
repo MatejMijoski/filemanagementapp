@@ -1,0 +1,12 @@
+{% extends 'admin/base.html' %}
+{% block extrahead %}
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+
+document.querySelector('div.breadcrumbs > a').href = "{% url 'index' %}";
+
+}, false);
+
+
+</script>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card card-signup">
+    <h5 class="card-header info-color white-text text-center py-4">
+        <strong>Edit Profile</strong>
+    </h5>
+    <div class="card-body px-lg-5 pt-0">
+        <form class="text-center" style="color: #757575;" method="post">
+            <div class="form-row">
+                <div class="col">
+                    <div class="md-form">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <h5>Passwords are not visible.</h5>
+                        <p>Raw passwords are not stored, so there is no way to see your password, but you can change the
+                            password using <a href="{% url 'password_reset' %}">this form.</a></p>
+                        <button class="btn btn-primary" type="submit">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    $('#id_password').css('display', 'none');
+    $('.helptext').css('display', 'none');
+</script>
+{% endblock %}
